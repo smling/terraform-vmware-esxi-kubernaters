@@ -36,3 +36,11 @@ variable "node_list" {
     type = list(string)
     default = []
 }
+variable "ssh_public_key" {
+  type = string
+  default = ""
+}
+variable "ssh_private_key" {
+  type = string
+  default = ""
+}

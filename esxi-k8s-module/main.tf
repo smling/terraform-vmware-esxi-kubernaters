@@ -14,10 +14,10 @@ resource "esxi_guest" "default" {
     virtual_network = var.esxi_vm_guest_default_settings.virtual_network
   }
   ovf_source = local.default-ovf-source
-  # ovf_properties {
-  #   key   = "instance-id"
-  #   value = random_id.instance_id.hex
-  # }
+  ovf_properties {
+    key   = "instance-id"
+    value = random_id.instance_id.hex
+  }
   ovf_properties {
     key   = "hostname"
     value = var.node_list[count.index]
@@ -26,20 +26,27 @@ resource "esxi_guest" "default" {
     key   = "password"
     value = var.default_password
   }
-  
+
+   ovf_properties {
+    key   = "public-keys"
+    value = var.ssh_public_key
+  }
+
   provisioner "remote-exec" {
-
-    inline = [
-      "sudo apt update",
-      "sudo apt upgrade -y"
-    ]
-
     connection {
       type     = "ssh"
-      host = "${self.ip_address}"
-      user     = "${local.default-ssh-user}"
+      host = self.ip_address
+      user     = local.default-ssh-user
       password = var.default_password
-      timeout = "30s"
+      timeout = "15s"
+      # private_key = var.ssh_private_key
+      agent = false
     }
+
+    inline = [
+      "echo '${var.default_password}' | sudo -S apt update",
+      "echo '${var.default_password}' | sudo -S apt upgrade -y",
+      "echo '${var.default_password}' | sudo -S apt clean"
+    ]
   }
 }

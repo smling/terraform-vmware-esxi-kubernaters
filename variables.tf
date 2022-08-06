@@ -3,6 +3,7 @@
 #
 variable "default_password" {
   type = string
+  sensitive = true
 }
 
 variable "master_nodes" {
@@ -17,4 +18,9 @@ variable "worker_nodes" {
 variable "ssh_public_key_path" {
   type = string
   default = "C:\\Users\\chunho.ling/.ssh/id_rsa.pub"
+}
+variable "ssh_private_key_path" {
+  type = string
+  default = "C:\\Users\\chunho.ling/.ssh/id_rsa"
+  sensitive = true
 }

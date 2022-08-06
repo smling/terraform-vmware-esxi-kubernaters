@@ -10,4 +10,6 @@ module "esxi-k8s-master" {
   source           = "./esxi-k8s-module"
   default_password = var.default_password
   node_list        = var.master_nodes
+  ssh_public_key = "${file(var.ssh_public_key_path)}"
+  ssh_private_key = "${file(var.ssh_private_key_path)}"
 }
