@@ -61,6 +61,8 @@ resource "esxi_guest" "default" {
       "echo '${var.default_password}' | sudo -S hostnamectl set-hostname ${var.node_list[count.index]}",
       "echo '${var.default_password}' | sudo -S apt update",
       "echo '${var.default_password}' | sudo -S apt upgrade -y",
+      "echo '${var.default_password}' | sudo -S chmod 755 /tmp/common.sh",
+      "echo '${var.default_password}' | sudo -S bash /tmp/common.sh",
       "echo '${var.default_password}' | sudo -S apt clean"
     ]
   }
