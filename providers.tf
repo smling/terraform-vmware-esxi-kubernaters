@@ -25,6 +25,7 @@ variable "esxi_username" {
 
 variable "esxi_password" { # Unspecified will prompt
   description = "ESXI server password."
+  sensitive = true
 }
 #
 #   Use of variables here to hide/move the variables to a separate file

@@ -5,15 +5,11 @@ variable "default_password" {
   type = string
 }
 
-variable "master_nodes" {
+variable "nodes" {
   type    = list(string)
-  default = ["vm-k8s-sr01"]
+  default = ["vm-k8s-sr01", "vm-k8s-sr02", "vm-k8s-sr03"]
 }
 
-variable "worker_nodes" {
-  type    = list(string)
-  default = ["vm-k8s-sr02", "vm-k8s-sr03"]
-}
 
 variable "esxi_vm_guest_default_settings" {
   type = object({

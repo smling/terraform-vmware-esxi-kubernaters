@@ -32,6 +32,20 @@ resource "esxi_guest" "default" {
     value = var.ssh_public_key
   }
 
+  provisioner "file" {
+    source      = "./scripts/1.24.3/common.sh"
+    destination = "/tmp/common.sh"
+    connection {
+      type     = "ssh"
+      host = self.ip_address
+      user     = local.default-ssh-user
+      password = var.default_password
+      timeout = "15s"
+      # private_key = var.ssh_private_key
+      agent = false
+    }
+  }
+
   provisioner "remote-exec" {
     connection {
       type     = "ssh"
@@ -44,6 +58,7 @@ resource "esxi_guest" "default" {
     }
 
     inline = [
+      "echo '${var.default_password}' | sudo -S hostnamectl set-hostname ${var.node_list[count.index]}",
       "echo '${var.default_password}' | sudo -S apt update",
       "echo '${var.default_password}' | sudo -S apt upgrade -y",
       "echo '${var.default_password}' | sudo -S apt clean"
