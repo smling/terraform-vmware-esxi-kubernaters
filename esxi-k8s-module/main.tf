@@ -33,7 +33,7 @@ resource "esxi_guest" "default" {
   }
 
   provisioner "file" {
-    source      = "./scripts/1.24.3/common.sh"
+    source      = "./scripts/1.26.2/common.sh"
     destination = "/tmp/common.sh"
     connection {
       type     = "ssh"
